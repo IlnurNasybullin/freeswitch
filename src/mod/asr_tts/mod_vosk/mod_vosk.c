@@ -221,10 +221,12 @@ static switch_status_t vosk_asr_get_results(switch_asr_handle_t *ah, char **xmls
 		cJSON *result = cJSON_Parse(vosk->result);
 
 		if (cJSON_HasObjectItem(result, "text")) {
-			*xmlstr = switch_safe_strdup(cJSON_GetObjectCstr(result, "text"));
+			// *xmlstr = switch_safe_strdup(cJSON_GetObjectCstr(result, "text"));
+			*xmlstr = switch_safe_strdup(cJSON_PrintUnformatted(result));
 			ret = SWITCH_STATUS_SUCCESS;
 		} else if (cJSON_HasObjectItem(result, "partial")) {
-			*xmlstr = switch_safe_strdup(cJSON_GetObjectCstr(result, "partial"));
+			// *xmlstr = switch_safe_strdup(cJSON_GetObjectCstr(result, "partial"));
+			*xmlstr = switch_safe_strdup(cJSON_PrintUnformatted(result));
 			ret = SWITCH_STATUS_MORE_DATA;
 		} else {
 			ret = SWITCH_STATUS_GENERR;
